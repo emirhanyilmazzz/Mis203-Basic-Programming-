@@ -1,0 +1,27 @@
+order_amount = float(input("Sipariş tutarını giriniz (TRY): "))
+available_stock = int(input("Mevcut stok miktarını giriniz: "))
+requested_quantity = int(input("Talep edilen adedi giriniz: "))
+member_input = input("Müşteri üye mi? (evet/hayır): ").strip().lower()
+
+is_member = member_input in ["evet", "e", "yes", "y"]
+
+if requested_quantity <= 0:
+    print("Sipariş Reddedildi: Geçersiz ürün adedi (Adet 0'dan büyük olmalıdır).")
+
+elif requested_quantity > available_stock:
+    print(f"Sipariş Reddedildi: Yetersiz stok (Talep: {requested_quantity}, Mevcut: {available_stock}).")
+
+else:
+    if is_member and order_amount >= 500:
+        discount = order_amount * 0.10
+        final_price = order_amount - discount
+        print("Sipariş Onaylandı: Stok yeterli. 500 TRY ve üzeri üye siparişi için %10 indirim uygulandı.")
+        print(f"Nihai Fiyat: {final_price:.2f} TRY")
+    else:
+        final_price = order_amount
+        if not is_member:
+            reason = "Stok yeterli. Müşteri üye olmadığı için indirim uygulanmadı."
+        else:
+            reason = "Stok yeterli. Sipariş 500 TRY altında olduğu için üye indirimi uygulanmadı."
+        print(f"Sipariş Onaylandı: {reason}")
+        print(f"Nihai Fiyat: {final_price:.2f} TRY")
